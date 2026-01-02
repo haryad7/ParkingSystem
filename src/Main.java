@@ -11,6 +11,7 @@ public class Main {
         for (int i = 0; i < h.length(); i++) {
             System.out.println(h.charAt(i));
             
+            
         }
         
         
