@@ -28,6 +28,7 @@ public class Motorcycle extends Vehicle{
         return hasSidecar;
     }
     
+    @Override
     public String toString() {
         return "Motorcycle [" + brand + " " + model + ", " + 
                licensePlate + ", " + color +", "  +year+ 
