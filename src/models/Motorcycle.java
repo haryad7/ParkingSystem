@@ -11,7 +11,7 @@ public class Motorcycle extends Vehicle{
     private static final double HOURLY_RATE = 1.0;
     
     public Motorcycle(String licensePlate,String color,String brand,String model,int year , boolean hasSidecar ){
-        super(licensePlate, VehicleType.CAR, color, brand, model,year);
+        super(licensePlate, VehicleType.MOTORCYCLE, color, brand, model,year);
         this.hasSidecar = hasSidecar;
     }
     @Override
