@@ -5,8 +5,8 @@ import enums.VehicleType;
  *
  * @author Haryad
  */
-public abstract class Vehicle {
-
+public abstract class Vehicle{
+    
     
     protected String licensePlate;
     protected String color;
