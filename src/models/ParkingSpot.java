@@ -17,14 +17,14 @@ import enums.VehicleType;
  *     are preferred to maintain data integrity</li>
  * </ul>
  * @author Haryad
- * @param <v>
+ * 
  */
-public class ParkingSpot<v extends Vehicle> {
+public class ParkingSpot {
 
-    private int spotNumber;
-    private SpotSize size;
+    private final int spotNumber;
+    private final SpotSize size;
     private SpotStatus status;
-    private v currentVehicle;
+    private Vehicle currentVehicle;
 
     private static int totalSpotsCreated = 0;
 
@@ -49,15 +49,29 @@ public class ParkingSpot<v extends Vehicle> {
      * @param vehicle the vehicle to park
      * @return true if successfully parked, false if spot is occupied
      */
-    public boolean parkVehicle(v vehicle) {
+    public boolean parkVehicle(Vehicle vehicle) {
 
-        if (status == SpotStatus.AVAILABLE) {
-            this.currentVehicle = vehicle;
-            this.status = SpotStatus.OCCUPIED;
-            return true;
+        if (status != SpotStatus.AVAILABLE) {
+            System.out.println("ERROR: Spot is not available");
+            return false;
         }
-        return false;
+        
+        if (!canFit(vehicle)) {
+            System.out.println("ERROR: " + vehicle.getType() + 
+                             " cannot fit in " + size + " spot!");
+            return false;
+        }
+        
+
+        this.currentVehicle = vehicle;
+        this.status = SpotStatus.OCCUPIED;
+        return true;
+        
+        
     }
+    
+    
+    
 
     /**
      * Remove the vehicle from this spot
@@ -194,6 +208,7 @@ public class ParkingSpot<v extends Vehicle> {
      *
      * @return formatted string with spot details
      */
+    @Override
     public String toString() {
         String vehicleInfo = switch (status) {
             case OCCUPIED ->
