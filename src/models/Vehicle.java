@@ -3,6 +3,7 @@ import enums.VehicleType;
 
 /**
  *
+ * @author Shanya
  * @author Haryad
  */
 public abstract class Vehicle{
@@ -25,10 +26,15 @@ public abstract class Vehicle{
      * @param brand brand of the vehicle
      * @param model model of the vehicle
      * @param year the year of the vehicle
+     * @throws IllegalArgumentException if license plate is null or empty
      */
     
     public Vehicle(String licensePlate,VehicleType type ,String color,String brand,String model,int year) {
-        this.licensePlate = licensePlate;
+        if (licensePlate == null || licensePlate.trim().isEmpty()) {
+            throw new IllegalArgumentException("License plate cannot be null or empty");
+        }
+        
+        this.licensePlate = licensePlate.trim().toUpperCase();
         this.color = color;
         this.type = type;
         this.brand = brand;
@@ -115,14 +121,34 @@ public abstract class Vehicle{
     public void setYear(int year) {
         this.year = year;
     }
+    /**
+     * Override equals() to compare vehicles by license plate
+     * @param obj object to compare
+     * @return true if same license plate
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Vehicle vehicle = (Vehicle) obj;
+        return licensePlate.equals(vehicle.licensePlate);
+    }
     
+    /**
+     * Override hashCode() for proper use in collections
+     * @return hash code based on license plate
+     */
+    @Override
+    public int hashCode() {
+        return licensePlate.hashCode();
+    }
     
     /**
      * @return string description
      */
-    @Override
-    public String toString() {
-        return type + " [" + brand + " " + model + ", " + 
-               licensePlate + ", " + color +", "  +year+ "]";
-    }
+//    @Override
+//    public String toString() {
+//        return type + " [" + brand + " " + model + ", " + 
+//               licensePlate + ", " + color +", "  +year+ "]";
+//    }
  }

@@ -219,13 +219,14 @@ public class ParkingLot {
     
     
     public boolean isVehicleExist(Vehicle vehicle){
-        for (ParkingSpot spot : spots) {
-            if( spot.getCurrentVehicle() == vehicle){
-              return true;
-            }  
-        }
-        return false;
+    for (ParkingSpot spot : spots) {
+        Vehicle current = spot.getCurrentVehicle();
+        if(current != null && current.getLicensePlate().equals(vehicle.getLicensePlate())){
+            return true;
+        }  
     }
+    return false;
+}
     
 
     /**
@@ -239,7 +240,7 @@ public class ParkingLot {
     public ParkingSpot parkVehicle(Vehicle vehicle, SpotSize preferredSize) {
         // Try to find preferred size first
         ParkingSpot spot = findAvailableSpot(preferredSize);
-
+        
         // If preferred size not available, try larger sizes
         if (spot == null && preferredSize == SpotSize.COMPACT) {
             spot = findAvailableSpot(SpotSize.REGULAR);
