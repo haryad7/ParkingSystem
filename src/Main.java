@@ -4,7 +4,6 @@ import services.*;
 /**
  * Main class to demonstrate the Parking System
  * Tests all features: parking, ticketing, payment processing
- * Uses only OOP concepts: polymorphism, interfaces, abstract classes, composition
  * @author Haryad
  */
 public class Main {
