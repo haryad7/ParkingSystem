@@ -6,6 +6,7 @@ import enums.VehicleType;
 /**
  * Represents a Car in the parking system
  * Extends Vehicle class demonstrating inheritance
+ * @author Shanya
  * @author Haryad
  */
 public class Car extends Vehicle {
@@ -31,8 +32,12 @@ public class Car extends Vehicle {
         return HOURLY_RATE;
     }
     
+    
     @Override
     public double calculateParkingFee(int hours){
+        if (hours < 0) {
+            throw new IllegalArgumentException("Hours cannot be negative");
+        }
         return hours * HOURLY_RATE;
     }
 

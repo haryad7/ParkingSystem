@@ -7,17 +7,20 @@ import enums.VehicleType;
 /**
  * Represents a single parking spot in the parking lot Each spot has a size,
  * status, and can hold one vehicle
- * <p><b>Design Notes:</b></p>
+ * <p>
+ * <b>Design Notes:</b></p>
  * <ul>
  * <li>No setter for spotNumber - spot numbers are permanent identifiers</li>
- * <li>No setter for size - physical size of a spot cannot change after construction</li>
- * <li>No setter for currentVehicle - use parkVehicle() and removeVehicle() methods instead
- *     to maintain consistency between vehicle and status</li>
- * <li>setStatus() is provided but controlled operations (parkVehicle, reserve, etc.) 
- *     are preferred to maintain data integrity</li>
+ * <li>No setter for size - physical size of a spot cannot change after
+ * construction</li>
+ * <li>No setter for currentVehicle - use parkVehicle() and removeVehicle()
+ * methods instead to maintain consistency between vehicle and status</li>
+ * <li>setStatus() is provided but controlled operations (parkVehicle, reserve,
+ * etc.) are preferred to maintain data integrity</li>
  * </ul>
+ *
  * @author Haryad
- * 
+ *
  */
 public class ParkingSpot {
 
@@ -55,23 +58,18 @@ public class ParkingSpot {
             System.out.println("ERROR: Spot is not available");
             return false;
         }
-        
+
         if (!canFit(vehicle)) {
-            System.out.println("ERROR: " + vehicle.getType() + 
-                             " cannot fit in " + size + " spot!");
+            System.out.println("ERROR: " + vehicle.getType()
+                    + " cannot fit in " + size + " spot!");
             return false;
         }
-        
 
         this.currentVehicle = vehicle;
         this.status = SpotStatus.OCCUPIED;
         return true;
-        
-        
+
     }
-    
-    
-    
 
     /**
      * Remove the vehicle from this spot
@@ -117,17 +115,19 @@ public class ParkingSpot {
         // COMPACT spots: only motorcycles
         // REGULAR spots: motorcycles and cars
         // LARGE spots: all vehicles (motorcycles, cars, trucks)
-
-        return switch (size) {
-            case COMPACT ->
-                vehicle.getType() == VehicleType.MOTORCYCLE;
-            case REGULAR ->
-                vehicle.getType() == VehicleType.MOTORCYCLE || vehicle.getType() == VehicleType.CAR;
-            case LARGE ->
-                true;
-            default ->
-                false;
-        };
+        if (vehicle!=null) {
+            return switch (size) {
+                case COMPACT ->
+                    vehicle.getType() == VehicleType.MOTORCYCLE;
+                case REGULAR ->
+                    vehicle.getType() == VehicleType.MOTORCYCLE || vehicle.getType() == VehicleType.CAR;
+                case LARGE ->
+                    true;
+                default ->
+                    false;
+            };
+        }
+        return false;
 
     }
 
@@ -173,7 +173,7 @@ public class ParkingSpot {
             this.status = SpotStatus.AVAILABLE;
         }
     }
-    
+
     // Getters and setters
     public int getSpotNumber() {
         return spotNumber;
@@ -182,7 +182,6 @@ public class ParkingSpot {
     public SpotSize getSize() {
         return size;
     }
-
 
     public SpotStatus getStatus() {
         return status;
@@ -196,12 +195,9 @@ public class ParkingSpot {
         return currentVehicle;
     }
 
-
     public static int getTotalSpotsCreated() {
         return totalSpotsCreated;
     }
-
-    
 
     /**
      * String representation of parking spot
@@ -228,18 +224,19 @@ public class ParkingSpot {
 
         return "Spot #" + spotNumber + " [" + size + "] - " + status + " [" + vehicleInfo + "]";
     }
-    
+
     /**
      * Detailed string with all information
+     *
      * @return detailed formatted string
      */
-    public String toDetailedString(){
+    public String toDetailedString() {
         StringBuilder sb = new StringBuilder();
         sb.append("=================================\n");
         sb.append("parking spot #").append(spotNumber).append("\n");
         sb.append("size: ").append(size).append("\n");
         sb.append("status: ").append(status).append("\n");
-        
+
         if (currentVehicle != null) {
             sb.append("Current Vehicle:\n");
             sb.append("  ").append(currentVehicle.toString()).append("\n");
@@ -247,7 +244,7 @@ public class ParkingSpot {
         } else {
             sb.append("Current Vehicle: None\n");
         }
-        
+
         sb.append("=================================");
         return sb.toString();
     }
